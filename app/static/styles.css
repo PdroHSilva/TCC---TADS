@@ -46,6 +46,16 @@ nav ul li a:hover {
     color: #008000;
 }
 
+.lat-long-container {
+    display: flex;
+    gap: 15px;
+}
+
+.lat-long-container div {
+    flex: 1;
+}
+
+
 /* Estilos para o mapa */
 #mapa {
     position: relative;

@@ -20,7 +20,8 @@ def adicionar_noticia(request):
                 'latitude': noticia.latitude,
                 'longitude': noticia.longitude,
                 'titulo': noticia.titulo,
-                'resumo': noticia.resumo
+                'resumo': noticia.resumo,
+                'icone' : noticia.icone,          
             })
     return JsonResponse({'error': 'Formulário inválido'}, status=400)
 

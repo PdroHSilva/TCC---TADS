@@ -9,11 +9,56 @@ document.addEventListener('DOMContentLoaded', function() {
     var markersLayer = L.layerGroup().addTo(map);
 
     // Função para adicionar marcadores
-    function adicionarMarcador(latitude, longitude, titulo, resumo) {
+    function adicionarMarcador(latitude, longitude, titulo, resumo, iconName) {
         console.log('Adicionando marcador:', latitude, longitude);
-        var marker = L.marker([latitude, longitude]).addTo(markersLayer);
+        console.log('Icone recebido:', iconName);
+        var icon = icone[iconName] ? icone[iconName] : locationIcon;
+
+        if (!icon) {
+            console.error('Ícone não definido para:', iconName);
+            return;
+        }
+
+        var marker = L.marker([latitude, longitude],{icon: icon}).addTo(markersLayer);
         marker.bindPopup('<strong>' + titulo + '</strong><br>' + resumo);
     }
+    // Defina diferentes ícones para usar no mapa
+    var carIcon = L.icon({
+        iconUrl: '/static/imgs/icon1.png',
+        iconSize: [35, 50],
+        iconAnchor: [22, 44],
+        popupAnchor: [-3, -76]
+    });
+
+    var theaterIcon = L.icon({
+        iconUrl: '/static/imgs/icon2.png',
+        iconSize: [35, 50],
+        iconAnchor: [22, 44],
+        popupAnchor: [-3, -76]
+    });
+
+    var homeIcon = L.icon({
+        iconUrl: 'static/imgs/icon4.png',
+        iconSize: [35, 50],
+        iconAnchor: [22, 44],
+        popupAnchor: [-3, -76]
+    });
+    
+    var locationIcon = L.icon({
+        iconUrl: 'static/imgs/icon3.png',
+        iconSize: [35, 50],
+        iconAnchor: [22, 44],
+        popupAnchor: [-3, -76]
+    })    
+   
+
+    // Mapeamento de nome de ícone para o objeto L.Icon correspondente
+    var icone = {
+        "carIcon": carIcon,
+        "theaterIcon": theaterIcon,
+        "homeIcon": homeIcon,
+        "locationIcon": locationIcon
+    };
 
     // Função para limpar todos os marcadores
     function limparMarcadores() {
@@ -28,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 limparMarcadores();
                 data.forEach(noticia => {
                     if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
-                        adicionarMarcador(noticia.latitude, noticia.longitude, noticia.titulo, noticia.resumo);
+                        adicionarMarcador(noticia.latitude, noticia.longitude, noticia.titulo, noticia.resumo, noticia.icone);
                     } else {
                         console.error('Coordenadas inválidas:', noticia.latitude, noticia.longitude);
                     }
@@ -42,6 +87,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const formSection = document.getElementById('form-section');
     if (toggleNewsButton && formSection) {
         formSection.style.display = 'none'; // Ocultar o formulário inicialmente
+
+        const closeButton = document.getElementById('close-form');
+
+        function fecharFormulario() {
+            formSection.style.display = 'none';
+            map.getContainer().classList.remove('blur-background');
+        }
+
+        closeButton.addEventListener('click', fecharFormulario);
 
         toggleNewsButton.addEventListener('click', function(e) {
             e.preventDefault();
@@ -114,6 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(form);
+            
+
+            const icone = document.querySelector('input[name="icone"]:checked').value;
 
             fetch("/adicionar_noticia/", {
                 method: 'POST',
@@ -125,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (!data.error) {
-                    adicionarMarcador(data.latitude, data.longitude, data.titulo, data.resumo);
+                    adicionarMarcador(data.latitude, data.longitude, data.titulo, data.resumo, data.icone);
                     form.reset();
                     formSection.style.display = 'none';
                     map.getContainer().classList.remove('blur-background');

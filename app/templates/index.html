@@ -7,7 +7,9 @@
     <title>Tela Inicial</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.min.js"></script>
     <script src="{% static 'scripts.js' %}"></script>
 </head>
 <body>
@@ -71,18 +73,61 @@
             <button id="close-form" class="close-button">&times;</button>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Adicionar Notícia</button>
-                <!-- <div class="lat-long-container">
+                
+                <!-- Campo Título -->
+                <label for="id_titulo">Título:</label>
+                {{ form.titulo }}
+                
+                <!-- Campo Resumo -->
+                <label for="id_resumo">Resumo:</label>
+                {{ form.resumo }}
+                
+                <!-- Campo Imagem -->
+                <label for="id_imagem">Imagem:</label>
+                {{ form.imagem }}
+                
+                <!-- Campo Link -->
+                <label for="id_link">Link:</label>
+                {{ form.link }}
+
+                 <!-- Campo Data -->
+                <label for="id_data">Data:</label>
+                {{ form.data }}
+    
+                <div class="lat-long-container">
                     <div>
-                        <label for="latitude">Latitude:</label>
-                        <input type="text" name="latitude" id="latitude">
+                        <label for="id_latitude">Latitude:</label>
+                        <input type="number" name="latitude" step="any" id="id_latitude">
                     </div>
                     <div>
-                        <label for="longitude">Longitude:</label>
-                        <input type="text" name="longitude" id="longitude">
+                        <label for="id_longitude">Longitude:</label>
+                        <input type="number" name="longitude" step="any" id="id_longitude">
                     </div>
-                </div> -->
+                </div>
+                <label for="icone">Escolha o ícone:</label>
+                <div class="icon-selection">
+                    <input type="radio" id="car-icon" name="icone" value="carIcon" checked>
+                    <label for="car-icon">
+                        <img src="{% static '\imgs\icon1.png' %}" alt="Ícone de Carro" width="40">
+                    </label>
+        
+                    <input type="radio" id="theater-icon" name="icone" value="theaterIcon">
+                    <label for="theater-icon">
+                        <img src="{% static '\imgs\icon2.png' %}" alt="Ícone Teatro" width="40">
+                    </label>
+        
+                    <input type="radio" id="location-icon" name="icone" value="locationIcon">
+                    <label for="location-icon">
+                        <img src="{% static '\imgs\icon3.png' %}" alt="Ícone Localização" width="40">
+                    </label>
+                    
+                    <input type="radio" id="home-icon" name="icone" value="homeIcon">
+                    <label for="home-icon">
+                        <img src="{% static '\imgs\icon4.png' %}" alt="Ícone de Casa" width="40">
+                    </label>
+                </div>
+                <button type="submit">Adicionar Notícia</button>               
+                
                 
             </form>
         </section>
