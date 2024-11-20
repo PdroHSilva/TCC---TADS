@@ -21,47 +21,15 @@
                 <li><a href="#sobre-nos">Contato</a></li>
                 <!-- Seletor de meses -->
                 <li>
-                    <select id="mes-seletor">
-                        <option value="">Selecione o mês</option>
-                        <option value="1">Janeiro</option>
-                        <option value="2">Fevereiro</option>
-                        <option value="3">Março</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Maio</option>
-                        <option value="6">Junho</option>
-                        <option value="7">Julho</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
-                    </select>
-                </li>
-                <!-- Seletor de dias -->
-                <li>
-                    <select id="dia-seletor" disabled>
-                        <option value="">Selecione o dia</option>
-                    </select>
+                    <button id="toggle-drawer" class="hamburger-icon">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </button>
                 </li>
             </ul>
         </nav>
-        <!-- Dropdown para o calendário com todos os meses e dias de 2024 -->
-        <div id="calendar-dropdown" class="dropdown-content">
-            <h3>2024 - 2024</h3>
-            <div class="meses">
-                <h4>Janeiro</h4>
-                <ul class="dias">
-                    <li><a href="#" class="dia" data-dia="01" data-mes="01">01</a></li>
-                    <li><a href="#" class="dia" data-dia="02" data-mes="01">02</a></li>
-                    <li><a href="#" class="dia" data-dia="03" data-mes="01">03</a></li>
-                    <!-- Mais dias -->
-                </ul>
-            </div>
-            <!-- Adicione outros meses e dias -->
-        </div>
-            
-    </header>
-
+    </header>     
 
     <main id="content">
         <!-- Mapa -->
@@ -132,5 +100,17 @@
             </form>
         </section>
     </main>
+         <!-- Drawer (Gaveta) -->
+         <div id="drawer" class="drawer">
+            <button id="close-drawer" class="close-button">&times;</button>
+            <h3>Filtrar Notícias</h3>
+            <input type="date" id="datepicker" min="2024-01-01" max="2024-12-31" />
+            <button id="filter-news-button">Filtrar</button>
+
+            <h3>Últimas Notícias</h3>
+            <ul id="news-history">
+                <!-- Notícias serão carregadas dinamicamente aqui -->
+            </ul>
+        </div>
 </body>
 </html>

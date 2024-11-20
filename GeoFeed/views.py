@@ -27,7 +27,7 @@ def adicionar_noticia(request):
 
 # Função para retornar os markers (LAT, LONG) em formato JSON
 def get_markers(request):
-    noticias = Noticia.objects.all().values('latitude', 'longitude', 'titulo', 'resumo')
+    noticias = Noticia.objects.all().order_by('-data').values('latitude', 'longitude', 'titulo', 'resumo')
     return JsonResponse(list(noticias), safe=False)
 
 def get_markers(request):
@@ -39,7 +39,7 @@ def get_markers(request):
     if mes and dia:
         try:
             data_selecionada = datetime(year=2024, month=int(mes), day=int(dia))
-            noticias = Noticia.objects.filter(data=data_selecionada).values('latitude', 'longitude', 'titulo', 'resumo')
+            noticias = Noticia.objects.filter(data=data_selecionada).values('latitude', 'longitude', 'titulo', 'resumo', 'icone')
         except ValueError:
             return JsonResponse({'error': 'Data inválida'}, status=400)
     else:

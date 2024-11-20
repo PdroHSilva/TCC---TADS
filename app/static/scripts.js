@@ -195,4 +195,60 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("Formulário de notícias não encontrado.");
     }
+
+        const drawer = document.getElementById('drawer');
+    const toggleDrawerButton = document.getElementById('toggle-drawer');
+    const closeDrawerButton = document.getElementById('close-drawer');
+
+    toggleDrawerButton.addEventListener('click', () => {
+        drawer.classList.add('open');
+    });
+
+    closeDrawerButton.addEventListener('click', () => {
+        drawer.classList.remove('open');
+    });
+
+    function carregarUltimasNoticias() {
+        fetch('/get_markers/')
+            .then(response => response.json())
+            .then(data => {
+                const newsHistory = document.getElementById('news-history');
+                newsHistory.innerHTML = ''; // Limpa a lista
+    
+                data.slice(-5).reverse().forEach(noticia => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <strong>${noticia.titulo}</strong>
+                        <p>${noticia.resumo}</p>
+                        <small>Data: ${noticia.data}</small>
+                    `;
+                    newsHistory.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Erro ao carregar últimas notícias:', error));
+    }
+    
+    toggleDrawerButton.addEventListener('click', () => {
+        drawer.classList.add('open');
+        carregarUltimasNoticias(); // Atualiza o histórico
+    });
+
+        const datepicker = document.getElementById('datepicker');
+    const filterNewsButton = document.getElementById('filter-news-button');
+
+    filterNewsButton.addEventListener('click', () => {
+        const selectedDate = datepicker.value;
+
+        if (selectedDate) {
+            const [year, month, day] = selectedDate.split('-');
+
+            // Chamar a função de filtro
+            carregarMarcadoresFiltrados(month, day);
+            drawer.classList.remove('open'); // Fecha o drawer
+        } else {
+            alert('Selecione uma data!');
+        }
+});
+
+          
 });
