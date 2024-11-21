@@ -10,6 +10,8 @@ def index(request):
     form = NoticiaForm()
     return render(request, 'index.html', {'form': form})
 
+def contato(request):
+    return render(request, 'contato.html')
 
 def adicionar_noticia(request):
     if request.method == 'POST':

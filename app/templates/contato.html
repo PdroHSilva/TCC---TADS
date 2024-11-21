@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - GeoFeed</title>
+    <link rel="stylesheet" href="{% static 'contato.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Mapa</a></li>
+                <li><a href="/contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <!-- Área Verde com Proposta -->
+        <section class="proposta-section">
+            <div class="text-content">
+                <h1>Proposta única da empresa</h1>
+                <p>
+                    Nosso principal objetivo com este aplicativo é manter a população de Três Lagoas sempre informada sobre os eventos e notícias locais, facilitando o acesso a informações relevantes em tempo real. Queremos contribuir para que a comunidade se sinta mais integrada e envolvida com o que acontece na cidade, criando uma plataforma que une tecnologia e praticidade para oferecer uma experiência personalizada e útil.
+                </p>
+            </div>
+        </section>
+
+        <!-- Logo no Círculo Preto -->
+        <section class="logo-section">
+            <div class="curved-black-section">
+                <img src="{% static 'imgs/logo.png' %}" alt="Logo GeoFeed" class="logo-image">
+            </div>
+        </section>
+
+        <!-- Equipe -->
+        <footer class="team-section">
+            <div class="team-member">
+                <img src="{% static 'imgs/dev1.png' %}" alt="Maick Holayama" class="team-photo">
+                <h3>Maick Holayama</h3>
+                <p>Email: <a href="mailto:maick_holayama@hotmail.com">maick_holayama@hotmail.com</a></p>
+                <p>GitHub: <a href="https://github.com/MaickH" target="_blank">MaickH</a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/maick-holayama" target="_blank">Perfil</a></p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'imgs/dev2.png' %}" alt="Pedro Henrique Mello" class="team-photo">
+                <h3>Pedro Henrique Mello</h3>
+                <p>Email: <a href="mailto:pmello.ads@gmail.com">pmello.ads@gmail.com</a></p>
+                <p>GitHub: <a href="https://github.com/peehpimentel" target="_blank">peehpimentel</a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/phmello17" target="_blank">Perfil</a></p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'imgs/dev3.png' %}" alt="Pedro Henrique Silva" class="team-photo">
+                <h3>Pedro Henrique Silva</h3>
+                <p>Email: <a href="mailto:p.silva18@outlook.com">p.silva18@outlook.com</a></p>
+                <p>GitHub: <a href="https://github.com/PdroHSilva" target="_blank">PdroHSilva</a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/pedro-henrique-da-silva-931022203/" target="_blank">Perfil</a></p>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>

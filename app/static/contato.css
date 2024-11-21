@@ -1,0 +1,149 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    overflow: hidden; /* Remove scroll */
+}
+
+/* Header */
+header {
+    background-color: #202020;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+header nav ul li a:hover {
+    color: #00FF00;
+}
+
+/* Main Container */
+.main-container {
+    display: grid;
+    grid-template-rows: 2fr 1fr auto;
+    height: calc(100vh - 50px);
+}
+
+/* Proposta Section */
+.proposta-section {
+    background-color: #00A651;
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+}
+
+/* Ajuste para o conteúdo de texto alinhado à esquerda */
+.text-content {
+    max-width: 700px; /* Limita a largura para caber no espaço */
+    margin: 0; /* Remove centralização */
+    padding: 20px 0 20px 40px; /* Espaçamento interno, ajusta mais para a esquerda */
+    text-align: justify; /* Justifica o texto */
+    color: white; /* Mantém o texto legível no fundo verde */
+    font-size: 18px; /* Tamanho adequado para leitura */
+    line-height: 1.8; /* Espaçamento entre linhas para melhor leitura */
+    position: relative; /* Garante que ele se posicione dentro do espaço correto */
+}
+
+/* Ajuste específico para o título alinhado à esquerda */
+.text-content h1 {
+    text-align: left; /* Alinha o título à esquerda */
+    font-size: 36px; /* Destaque maior para o título */
+    font-weight: bold; /* Torna o título mais visível */
+    margin-bottom: 20px; /* Espaçamento inferior */
+    padding-left: 40px; /* Alinha com o corpo do texto */
+}
+
+
+
+.text-content p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Logo Section */
+.logo-section {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.curved-black-section {
+    background-color: #202020;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    top: -195%; /* Subiu o círculo para cima */
+}
+
+.logo-image {
+    width: 300px; /* Tamanho da logo mantido */
+    height: 300px;
+}
+
+/* Footer Section */
+.team-section {
+    background-color: #202020;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.team-member {
+    text-align: center;
+    color: white;
+}
+
+.team-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.team-member h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.team-member p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.team-member a {
+    color: #00FF00;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.team-member a:hover {
+    color: #FFFFFF;
+}
