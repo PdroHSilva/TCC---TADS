@@ -77,6 +77,39 @@ nav ul li a:hover {
     flex: 1;
 }
 
+/* Estilo para o efeito de carregamento */
+#mapa.loading {
+    position: relative;
+    filter: blur(2px); /* Opcional: desfoque do mapa enquanto carrega */
+    pointer-events: none; /* Desativa interações enquanto carrega */
+}
+
+#mapa.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px; /* Tamanho do spinner */
+    height: 50px;
+    border: 5px solid rgba(0, 128, 0, 0.3); /* Cor verde com transparência */
+    border-top-color: #008000; /* Cor sólida para o topo */
+    border-radius: 50%;
+    animation: spin 1s linear infinite; /* Animação de giro */
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Para garantir que fique acima do mapa */
+}
+
+/* Animação do spinner */
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
 
 /* Estilos para o mapa */
 #mapa {
@@ -179,7 +212,7 @@ input[type="number"] {
     background: none;
     border: none;
     font-size: 24px;
-    color: white;
+    color: black;
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -284,8 +317,8 @@ h2 {
 
 /* Estilo para o botão "hamburger" */
 .hamburger-icon {
-    position: absolute;
-    top: 10px;
+    position: relative;
+    top: -6px;
     right: 10px;
     background: none;
     border: none;

@@ -186,11 +186,49 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedDate = datepicker.value;
             if (selectedDate) {
                 const [year, month, day] = selectedDate.split('-');
-                carregarMarcadoresFiltrados(month, day);
+                recarregarMapaComFiltro(month, day);
                 drawer.classList.remove('open');
             } else {
                 alert('Selecione uma data!');
             }
         });
     }
+
+    function recarregarMapaComFiltro(mes, dia) {
+        // Adiciona um efeito de "loading" no mapa
+        const mapaContainer = document.getElementById('mapa');
+        mapaContainer.classList.add('loading'); // Classe CSS para desfoque ou indicação de carregamento
+    
+        // Recarrega os marcadores com base no filtro
+        fetch(`/get_markers/?mes=${mes}&dia=${dia}`)
+        .then((response) => response.json())
+        .then((data) => {
+            limparMarcadores(); // Limpa os marcadores existentes
+            console.log('Marcadores filtrados:', data);
+
+            // Simula o tempo de carregamento para sincronizar com o efeito de loading
+            setTimeout(() => {
+                // Adiciona os marcadores filtrados
+                data.forEach((noticia) => {
+                    if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
+                        adicionarMarcador(
+                            noticia.latitude,
+                            noticia.longitude,
+                            noticia.titulo,
+                            noticia.resumo,
+                            noticia.icone
+                        );
+                    }
+                });
+
+                // Remove o efeito de carregamento após adicionar os marcadores
+                mapaContainer.classList.remove('loading');
+            }, 1000); // Tempo do delay sincronizado com o spinner (ajuste conforme necessário)
+        })
+        .catch((error) => {
+            console.error('Erro ao filtrar marcadores:', error);
+            mapaContainer.classList.remove('loading'); // Remove o efeito mesmo em caso de erro
+        });
+}
+    
 });
