@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Camada para gerenciar marcadores
     var markersLayer = L.layerGroup().addTo(map);
 
+    // Armazena os marcadores adicionados no mapa
+    var markerMap = new Map();
+
     // Mapeamento de ícones
     var icone = {
         carIcon: L.icon({
@@ -41,11 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var icon = icone[iconName] || icone.locationIcon;
         var marker = L.marker([latitude, longitude], { icon: icon }).addTo(markersLayer);
         marker.bindPopup(`<strong>${titulo}</strong><br>${resumo}`);
+        markerMap.set(titulo, marker); // Adiciona o marcador ao Map para rastrear pelo título
     }
 
     // Limpar todos os marcadores
     function limparMarcadores() {
         markersLayer.clearLayers();
+        markerMap.clear();
     }
 
     // Carregar marcadores filtrados
@@ -54,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then((response) => response.json())
             .then((data) => {
                 limparMarcadores();
-                console.log("Dados recebidos do servidor:", data);
                 data.forEach((noticia) => {
                     if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
                         adicionarMarcador(
@@ -77,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const dia = String(hoje.getDate()).padStart(2, '0');
         const mes = String(hoje.getMonth() + 1).padStart(2, '0');
         const ano = hoje.getFullYear();
-    
+
         if (datepicker) {
             datepicker.value = `${ano}-${mes}-${dia}`;
             carregarMarcadoresFiltrados(mes, dia);
@@ -127,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log("Resposta do servidor após adicionar notícia:", data);
                     if (!data.error) {
                         const hoje = new Date();
                         const dia = String(hoje.getDate()).padStart(2, '0');
@@ -148,6 +151,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Carregar últimas notícias no drawer
     const drawer = document.getElementById('drawer');
     const newsHistory = document.getElementById('news-history');
+    const refreshButton = document.getElementById('refresh-news');
+
     function carregarUltimasNoticias() {
         fetch('/get_markers/')
             .then((response) => response.json())
@@ -160,6 +165,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p>${noticia.resumo}</p>
                         <small>Adicionado em: ${new Date(noticia.data_adicionado).toLocaleString()}<br>Duração: ${noticia.duracao} dias</small>
                     `;
+                    listItem.addEventListener('click', () => {
+                        const marker = markerMap.get(noticia.titulo);
+                        if (marker) {
+                            map.setView(marker.getLatLng(), 16); // Ajusta o zoom para centralizar o marcador
+                            marker.openPopup();
+                            drawer.classList.remove('open'); // Fecha o drawer
+                        }
+                    });
                     newsHistory.appendChild(listItem);
                 });
             })
@@ -179,6 +192,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Botão de atualização no drawer
+    if (refreshButton) {
+        refreshButton.addEventListener('click', () => {
+            carregarUltimasNoticias();
+        });
+    }
+
     // Filtro por data no drawer
     const filterNewsButton = document.getElementById('filter-news-button');
     if (filterNewsButton && datepicker) {
@@ -195,40 +215,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function recarregarMapaComFiltro(mes, dia) {
-        // Adiciona um efeito de "loading" no mapa
         const mapaContainer = document.getElementById('mapa');
-        mapaContainer.classList.add('loading'); // Classe CSS para desfoque ou indicação de carregamento
-    
-        // Recarrega os marcadores com base no filtro
+        mapaContainer.classList.add('loading');
+
         fetch(`/get_markers/?mes=${mes}&dia=${dia}`)
-        .then((response) => response.json())
-        .then((data) => {
-            limparMarcadores(); // Limpa os marcadores existentes
-            console.log('Marcadores filtrados:', data);
-
-            // Simula o tempo de carregamento para sincronizar com o efeito de loading
-            setTimeout(() => {
-                // Adiciona os marcadores filtrados
-                data.forEach((noticia) => {
-                    if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
-                        adicionarMarcador(
-                            noticia.latitude,
-                            noticia.longitude,
-                            noticia.titulo,
-                            noticia.resumo,
-                            noticia.icone
-                        );
-                    }
-                });
-
-                // Remove o efeito de carregamento após adicionar os marcadores
+            .then((response) => response.json())
+            .then((data) => {
+                limparMarcadores();
+                setTimeout(() => {
+                    data.forEach((noticia) => {
+                        if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
+                            adicionarMarcador(
+                                noticia.latitude,
+                                noticia.longitude,
+                                noticia.titulo,
+                                noticia.resumo,
+                                noticia.icone
+                            );
+                        }
+                    });
+                    mapaContainer.classList.remove('loading');
+                }, 1000);
+            })
+            .catch((error) => {
+                console.error('Erro ao filtrar marcadores:', error);
                 mapaContainer.classList.remove('loading');
-            }, 1000); // Tempo do delay sincronizado com o spinner (ajuste conforme necessário)
-        })
-        .catch((error) => {
-            console.error('Erro ao filtrar marcadores:', error);
-            mapaContainer.classList.remove('loading'); // Remove o efeito mesmo em caso de erro
-        });
-}
-    
+            });
+    }
 });

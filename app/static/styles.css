@@ -70,11 +70,14 @@ nav ul li a:hover {
 
 .lat-long-container {
     display: flex;
-    gap: 15px;
+    gap: 8px;
+    align-items: baseline;
 }
+
 
 .lat-long-container div {
     flex: 1;
+    
 }
 
 /* Estilo para o efeito de carregamento */
@@ -202,6 +205,19 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
     -moz-appearance: textfield; /* Remove as setas no Firefox */
 }
+
+.close-drawer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #008000;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
 
 
 /* Botão de fechar o formulário */
@@ -452,6 +468,135 @@ form input[type="number"] {
     box-sizing: border-box;
 }
 
+/* Estilo para o contêiner do título e botão */
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
+/* Estilo para o botão de atualizar */
+.refresh-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+}
 
+.refresh-button:hover {
+    color: #007bff; /* Cor de destaque ao passar o mouse */
+}
 
+/* Estilo para o spinner */
+.spinner {
+    border: 3px solid #f3f3f3; /* Cor de fundo */
+    border-top: 3px solid #007bff; /* Cor do spinner */
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+    margin-left: 10px; /* Espaço entre o botão e o spinner */
+}
+
+/* Animação de rotação */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Container para Data e Duração */
+.date-duration-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaçamento entre os campos */
+    margin-bottom: 20px;
+}
+
+/* Estilização de cada campo */
+.date-duration-container .field {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-duration-container label {
+    font-size: 16px;
+    color: #202020; /* Cor do texto */
+    margin-bottom: 5px; /* Espaçamento entre o label e o campo */
+    font-weight: bold;
+}
+
+.date-duration-container input[type="number"],
+.date-duration-container input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* Melhorias no input de data */
+.date-duration-container input[type="date"] {
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Foco nos campos */
+.date-duration-container input:focus {
+    border-color: #008000; /* Verde no foco */
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.5); /* Destaque no foco */
+}
+
+/* Padronização dos campos de formulário */
+form input[type="text"],
+form input[type="url"],
+form input[type="file"],
+form input[type="number"],
+form input[type="date"],
+form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+    background-color: #fff; /* Cor de fundo */
+    color: #333; /* Cor do texto */
+}
+
+/* Foco nos campos */
+form input[type="text"]:focus,
+form input[type="url"]:focus,
+form input[type="file"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus,
+form textarea:focus {
+    border-color: #008000; /* Cor verde no foco */
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.5); /* Destaque no foco */
+}
+
+/* Alinhamento consistente dos labels */
+form label {
+    font-size: 16px;
+    color: #202020;
+    font-weight: bold;
+    display: block;
+}
+
+.icon-selection {
+    display: flex; /* Alinha os ícones horizontalmente */
+    gap: 10px; /* Espaço entre os ícones */
+    justify-content: center; /* Centraliza os ícones */
+    margin: 15px 0;
+}

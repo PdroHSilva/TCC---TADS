@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.timezone import now
+from django.utils.timezone import now, localtime
 from datetime import timedelta, datetime
 
 
@@ -17,11 +17,11 @@ class Noticia(models.Model):
 
     def esta_visivel_em(self, data_consulta):
         """
-        Verifica se a notícia está visível em uma data específica, considerando apenas a parte da data.
+        Verifica se a notícia está visível em uma data específica.
         """
         if self.data:
-            # Trabalhar com objetos `datetime.date` diretamente
-            data_inicio = self.data.date() if isinstance(self.data, datetime) else self.data
+            # Ajusta para o timezone local antes de comparar
+            data_inicio = localtime(self.data).date()  # Converte para data local sem hora
             data_final = data_inicio + timedelta(days=self.duracao - 1)
             return data_inicio <= data_consulta <= data_final
         return False

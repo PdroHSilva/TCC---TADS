@@ -53,12 +53,18 @@
                 <label for="id_link">Link:</label>
                 {{ form.link }}
 
-                <label for="id_data">Data:</label>
-                {{ form.data }}
-
-                <!-- Campo Duração -->
-                <label for="id_duracao">Duração (em dias):</label>
-                <input type="number" name="duracao" id="id_duracao" min="1" placeholder="Digite a duração ou deixe em branco para indeterminado">
+                <div class="date-duration-container">
+                    <!-- Campo Data -->
+                    <div class="field">
+                        <label for="id_data">Data:</label>
+                        {{ form.data }}
+                    </div>
+                    <!-- Campo Duração -->
+                    <div class="field">
+                        <label for="id_duracao">Duração (em dias):</label>
+                        <input type="number" name="duracao" id="id_duracao" min="1" placeholder="Digite a duração ou deixe em branco para indeterminado">
+                    </div>
+                </div>
     
                 <div class="lat-long-container">
                     <label for="id_latitude">Latitude:</label>
@@ -96,12 +102,15 @@
 
         <!-- Drawer -->
         <div id="drawer" class="drawer">
-            <button id="close-drawer" class="close-button">&times;</button>
+            <button id="close-drawer" class="close-drawer">&times;</button>
             <h3>Filtrar Notícias</h3>
-            <input type="date" id="datepicker" min="2024-01-01" max="2024-12-31" />
+            <input type="date" id="datepicker" min="2024-01-01" max="2124-12-31" />
             <button id="filter-news-button">Filtrar</button>
-
+        <div class="drawer-header">
             <h3>Últimas Notícias</h3>
+            <button id="refresh-news" class="refresh-button">🔄</button>
+            <span id="loading-spinner" class="spinner" style="display: none;"></span>
+        </div>
             <ul id="news-history">
                 <!-- Notícias carregadas dinamicamente aqui -->
             </ul>
