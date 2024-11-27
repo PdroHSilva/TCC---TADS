@@ -1,26 +1,26 @@
-# tcc_tads
+# APPLICATION FOR NEWS OPTIMIZATION AND HIGHLIGHTING CURRENT ENTERTAINMENT.
 
-- https://docs.google.com/document/d/1eQCwuA5Jpkk0kRdsGTK8FFxlApZFXcadl_LqsF-2H5Q/edit?usp=sharing
+- [https://docs.google.com/document/d/1eQCwuA5Jpkk0kRdsGTK8FFxlApZFXcadl_LqsF-2H5Q/edit?usp=sharing](https://docs.google.com/document/d/1DYnlFzmnonNVt1q_zbKVKrh6Wtcu1RlepiPM2Jh_ENo/edit?usp=sharing)
 
-# How to Clone a GitHub Repository (in English)
+# How to Clone a GitHub Repository
 
 ## Install Git:
 
 - If you don’t already have Git installed, download and install it from git-scm.com.
 
-## Open Terminal or Command Prompt:
+## Open Terminal or Windows Powershell:
 
 - On Windows, use Command Prompt or Git Bash.
 - On macOS and Linux, you can use Terminal.
 
-## Go to GitHub and find the repository:
+## Access GitHub and find the repository:
 
 - Open GitHub in your browser.
 - Navigate to the repository you want to clone.
 
 ## Copy the repository URL:
 
-- Click on the green “Code” button.
+- Click on the green **Code** button.
 - Select HTTPS or SSH (if you have SSH set up) and copy the URL.
 
 ## Navigate to your local directory:
@@ -35,35 +35,58 @@
 
 Done! Your repository will be cloned to your local machine. You can now navigate to the repository folder with cd <repository-folder>.
 
-# Como Clonar um Repositório GitHub (em Português)
+# How to install all dependencies for the application
 
-## Instale o Git:
+## First Method: Install Dependencies Individually 
 
-- Caso ainda não tenha o Git instalado, faça o download e instale-o a partir de git-scm.com.
+### Install Python 3:
 
-## Abra o Terminal ou Prompt de Comando:
+- Download Python from the official website: python.org.
+- During installation, ensure you check the box "Add Python to PATH".
+- Verify the installation with: python --version
 
-- No Windows, use o Prompt de Comando ou Git Bash.
-- No macOS e Linux, você pode usar o Terminal.
+### Verify is Pip is installed:
 
-## Vá até o GitHub e encontre o repositório:
+- Pip usually comes pre-installed with Python. Verify with: pip --version
+- If not installed, follow the pip installation guide.
 
-- Abra o GitHub no seu navegador.
-- Navegue até o repositório que você deseja clonar.
+### Activate the virtual environment:
 
-## Copie a URL do repositório:
+- Virtual environments allow you to isolate Python projects, activate with: 
+  - **Windows**:
+    ```bash
+    .\venv\Scripts\activate
+    ```
+  - **macOS/Linux**:
+    ```bash
+    source venv/bin/activate
+    ```
+### Install Django
 
-- Clique no botão verde “Code”.
-- Selecione HTTPS ou SSH (caso tenha SSH configurado) e copie a URL.
+- pip install django
+- Verify with: python -m django --version
 
-## Navegue até o diretório local:
+### Install Pillow
 
-- No terminal ou prompt de comando, navegue até o diretório onde deseja clonar o repositório usando o comando cd.
+- Pillow is required for image processing in Django install with: pip install pillow
+- Verify Pillow installation with: python -m PIL
 
-## Execute o comando git clone:
+### Run Django Server
 
-## No terminal, digite o seguinte comando e cole a URL do repositório:
+- First you need to make migrations of all changes with: python -m manage.py makemigrations
+- Apply those migrations: python -m manage.py migrate
+- Run server: python -m manage.py runserver
+- Open your browser and navigate to http://localhost:8000/ or http://127.0.0.1:8000/
 
-- git clone https://github.com/peehpimentel/tcc-tads.git
+Done! You’ve successfully installed Python, Django, and Pillow, and can now use our application.
 
-Pronto! O repositório será clonado no seu computador. Agora você pode navegar até a pasta do repositório com cd <pasta-do-repositorio>.
+## Second Method: Install All Dependencies at once from requirements.txt
+
+### Ensure you’re in your virtual environment:
+
+- **Windows**: .\venv\Scripts\activate
+- **macOS/Linux**: source venv/bin/activate
+
+### Install all dependencies:
+
+- Run this command to install all dependencies: pip install -r requirements.txt
