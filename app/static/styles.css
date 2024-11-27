@@ -10,6 +10,7 @@ body {
     background-color: #f0f0f0;
     color: #333;
     height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+    overflow: hidden;
 }
 
 html {
@@ -17,18 +18,81 @@ html {
 }
 
 header {
+    
+    display: flex;
+    justify-content: center; /* Espaça os elementos nos extremos */
+    align-items: center;
     background-color: #202020;
-    padding: 20px;
-    text-align: center;
-    height: 50px; /* Define a altura do cabeçalho */
+    padding: 10px 20px; /* Ajuste de espaçamento interno */
+    height: 62px;
+    width: 100%;
+    box-sizing: border-box;
+    
 }
 
-/* Container da logo */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espaço entre os elementos principais */
+    height: 62px;
+}
+
+/* Links centrais */
+.nav-links {
+    list-style: none; /* Remove marcadores */
+    display: flex; /* Define como flex container */
+    justify-content: center; /* Centraliza os links */
+    align-items: center; /* Alinha verticalmente */
+    gap: 40px; /* Espaçamento entre os links */
+    flex-grow: 1; /* Faz o container dos links ocupar espaço extra */
+    margin: 0; /* Remove margens */
+    padding: 0; /* Remove padding */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    
+}
+
+.nav-links li a:hover {
+    color: #008000; /* Hover em verde */
+}
+
+
+ /* Botão do menu hambúrguer */
+ .hamburger-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 25px;
+    margin-left: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+.hamburger-icon div {
+    background-color: #fff;
+    height: 3px;
+    width: 100%;
+    border-radius: 5px;
+}
+   
+  
+
+/* Logo e título à esquerda */
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-right: auto; /* Move o conteúdo para a esquerda */
+    gap: 10px; /* Espaço entre logo e título */
+    position: absolute;
+    left: 20px;
 }
 
 /* Estilo da logo */
@@ -45,18 +109,21 @@ header {
 }
 
 
+/* Links de navegação */
 nav ul {
     list-style-type: none;
     display: flex;
-    justify-content: center;
+    align-items: center; /* Alinha os itens na altura central */
     gap: 40px;
+    
+    
 }
 
+/* Estilo dos links */
 nav ul li a {
     text-decoration: none;
     color: #fff;
     font-size: 18px;
-    padding: 10px 20px;
     transition: color 0.3s ease;
 }
 
@@ -117,11 +184,12 @@ nav ul li a:hover {
 /* Estilos para o mapa */
 #mapa {
     position: relative;
-    height: calc(100vh - 50px); /* Preenche o espaço restante da tela após o cabeçalho */
+    height: calc(100vh - 62px); /* Preenche o espaço restante da tela após o cabeçalho */
     width: 100vw; /* O mapa preenche toda a largura */
     margin: 0;
     padding: 0;
     z-index: 1;
+    overflow: hidden;
 }
 
 /* Estilos do modal (formulário de adicionar notícia) */
@@ -331,27 +399,6 @@ h2 {
     border-bottom: none;
 }
 
-/* Estilo para o botão "hamburger" */
-.hamburger-icon {
-    position: relative;
-    top: -6px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 25px;
-}
-
-.hamburger-icon div {
-    background-color: white;
-    height: 3px;
-    width: 100%;
-    border-radius: 5px;
-}
 
 
 /* Estilizar o botão do dropdown (remover bordas e plano de fundo) */
@@ -442,7 +489,7 @@ h2 {
 #filter-news-form button:hover {
     background-color: #006400;
 }
-
+/*
 header nav ul li select {
     background-color: #fff;
     color: #333;
@@ -478,34 +525,42 @@ form input[type="number"] {
 
 /* Estilo para o botão de atualizar */
 .refresh-button {
-    background-color: transparent;
+    position: relative;
     border: none;
+    background: none;
     cursor: pointer;
-    font-size: 18px;
-    padding: 5px;
+    padding: 0;
+    margin-left: 10px; /* Ajuste para posicionar ao lado do título */
 }
 
-.refresh-button:hover {
-    color: #007bff; /* Cor de destaque ao passar o mouse */
+.refresh-button img {
+    width: 20px; /* Tamanho do ícone */
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.refresh-button:hover img {
+    transform: rotate(90deg); /* Animação ao passar o mouse */
 }
 
 /* Estilo para o spinner */
 .spinner {
-    border: 3px solid #f3f3f3; /* Cor de fundo */
-    border-top: 3px solid #007bff; /* Cor do spinner */
+    margin-left: 5px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc; /* Cor da borda */
+    border-top: 2px solid #4caf50; /* Cor da parte ativa */
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    animation: spin 1s linear infinite;
-    margin-left: 10px; /* Espaço entre o botão e o spinner */
+    animation: spin 0.8s linear infinite;
 }
 
 /* Animação de rotação */
 @keyframes spin {
-    0% {
+    from {
         transform: rotate(0deg);
     }
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }

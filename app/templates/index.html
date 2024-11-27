@@ -14,19 +14,21 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="{% static 'imgs/logo.png' %}" alt="Logo GeoFeed" class="site-logo">
+                <span class="site-title">GeoFeed</span>
+            </div>
+            <ul class="nav-links">
                 <li><a href="#mapa">Mapa</a></li>
                 <li><a href="#" id="toggle-news">Adicionar Notícia</a></li>
                 <li><a href="{% url 'contato' %}">Contato</a></li>
-                <li>
-                    <button id="toggle-drawer" class="hamburger-icon">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </button>
-                </li>
             </ul>
+            <button id="toggle-drawer" class="hamburger-icon">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
         </nav>
     </header>     
 
@@ -106,11 +108,13 @@
             <h3>Filtrar Notícias</h3>
             <input type="date" id="datepicker" min="2024-01-01" max="2124-12-31" />
             <button id="filter-news-button">Filtrar</button>
-        <div class="drawer-header">
-            <h3>Últimas Notícias</h3>
-            <button id="refresh-news" class="refresh-button">🔄</button>
-            <span id="loading-spinner" class="spinner" style="display: none;"></span>
-        </div>
+            <div class="news-header">
+                <h3>Últimas Notícias</h3>
+                <button id="refresh-news" class="refresh-button">
+                    <img src="{% static 'imgs/refresh-ccw-svgrepo-com.svg' %}" alt="Refresh">
+                </button>
+                <span id="loading-spinner" class="spinner" style="display: none;"></span>
+            </div>
             <ul id="news-history">
                 <!-- Notícias carregadas dinamicamente aqui -->
             </ul>
