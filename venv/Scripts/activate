@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Documentos\Pedro\AEMS\6º Período\TCCzada\venv"
+VIRTUAL_ENV="C:\Users\Pedro Henrique\Desktop\Estudos\AEMS\TCC---TADS\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

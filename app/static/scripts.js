@@ -149,6 +149,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function getRelativeTime(dateString) {
+        const now = new Date();
+        const date = new Date(dateString);
+        const diffInSeconds = Math.floor((now - date) / 1000);
+    
+        // Conversão do tempo decorrido
+        const minutes = Math.floor(diffInSeconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+    
+        const rtf = new Intl.RelativeTimeFormat('pt-br', { numeric: 'auto' });
+    
+        if (minutes < 60) {
+            return rtf.format(-minutes, 'minute'); // Tempo em minutos
+        } else if (hours < 24) {
+            return rtf.format(-hours, 'hour'); // Tempo em horas
+        } else {
+            return rtf.format(-days, 'day'); // Tempo em dias
+        }
+    }
+
     // Carregar últimas notícias no drawer
     const drawer = document.getElementById('drawer');
     const newsHistory = document.getElementById('news-history');
@@ -156,16 +177,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function carregarUltimasNoticias() {
         newsHistory.innerHTML = '<div class="loading-spinner"></div>'; // Adiciona o spinner de loading
-        fetch('/get_markers/') // Busca todas as notícias, sem filtro de data
+        fetch('/get_noticias_intervalo/')
             .then((response) => response.json())
             .then((data) => {
                 newsHistory.innerHTML = ''; // Remove o spinner de loading
                 data.forEach((noticia) => {
                     const listItem = document.createElement('li');
+    
+                    // Usa o campo 'data_adicionado' para calcular o tempo relativo
+                    const tempoLegivel = getRelativeTime(noticia.data_adicionado);
+    
                     listItem.innerHTML = `
                         <strong>${noticia.titulo}</strong>
                         <p>${noticia.resumo}</p>
-                        <small>Adicionado em: ${new Date(noticia.data_adicionado).toLocaleString()}<br>Duração: ${noticia.duracao} dias</small>
+                        <small>${tempoLegivel}<br>Adicionado em: ${new Date(
+                            noticia.data_adicionado
+                        ).toLocaleString()}<br>Duração: ${noticia.duracao} dias</small>
                     `;
                     listItem.addEventListener('click', () => {
                         const marker = markerMap.get(noticia.titulo);
