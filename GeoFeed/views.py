@@ -66,3 +66,27 @@ def get_markers(request):
 
     except Exception as e:
         return JsonResponse({'error': f'Erro inesperado: {str(e)}'}, status=500)
+    
+def get_noticias_intervalo(request):
+    try:
+        inicio = datetime(2024, 1, 1)
+        fim = datetime(2025, 12, 31)
+        noticias = Noticia.objects.filter(data_adicionado__range=(inicio, fim))
+
+        response_data = [
+            {
+                'latitude': noticia.latitude,
+                'longitude': noticia.longitude,
+                'titulo': noticia.titulo,
+                'resumo': noticia.resumo,
+                'icone': noticia.icone,
+                'data_adicionado': localtime(noticia.data_adicionado).isoformat(),
+                'duracao': noticia.duracao,
+            }
+            for noticia in noticias
+        ]
+
+        return JsonResponse(response_data, safe=False)
+
+    except Exception as e:
+        return JsonResponse({'error': f'Erro ao buscar notícias: {str(e)}'}, status=500)
