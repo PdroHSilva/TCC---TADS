@@ -8,7 +8,10 @@
 body {
     font-family: Arial, sans-serif;
     background-color: white;
-    overflow: hidden; /* Remove scroll */
+    min-height: 100vh;
+    overflow-x: hidden; /* Remove scroll horizontal */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
@@ -38,82 +41,73 @@ header nav ul li a:hover {
 
 /* Main Container */
 .main-container {
-    display: grid;
-    grid-template-rows: 2fr 1fr auto;
-    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 50px); /* Altura dinâmica */
 }
 
 /* Proposta Section */
 .proposta-section {
     background-color: #00A651;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 40px;
+    padding: 20px;
+    flex: 1;
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
 }
 
-/* Ajuste para o conteúdo de texto alinhado à esquerda */
 .text-content {
-    max-width: 700px; /* Limita a largura para caber no espaço */
-    margin: 0; /* Remove centralização */
-    padding: 20px 0 20px 40px; /* Espaçamento interno, ajusta mais para a esquerda */
-    text-align: justify; /* Justifica o texto */
-    color: white; /* Mantém o texto legível no fundo verde */
-    font-size: 18px; /* Tamanho adequado para leitura */
-    line-height: 1.8; /* Espaçamento entre linhas para melhor leitura */
-    position: relative; /* Garante que ele se posicione dentro do espaço correto */
+    max-width: 70%; /* Ajusta o tamanho máximo do texto */
+    margin: 0 auto; /* Centraliza o texto horizontalmente */
+    text-align: center; /* Alinha o texto ao centro */
+    font-size: 20px; /* Aumenta o tamanho do texto */
+    line-height: 1.8; /* Melhora o espaçamento entre linhas */
+    color: white;
 }
 
-/* Ajuste específico para o título alinhado à esquerda */
 .text-content h1 {
-    text-align: left; /* Alinha o título à esquerda */
-    font-size: 36px; /* Destaque maior para o título */
-    font-weight: bold; /* Torna o título mais visível */
-    margin-bottom: 20px; /* Espaçamento inferior */
-    padding-left: 40px; /* Alinha com o corpo do texto */
+    font-size: 36px; /* Aumenta o tamanho do título */
+    text-align: center; /* Centraliza o título */
+    margin-bottom: 20px;
 }
 
-
-
-.text-content p {
-    font-size: 18px;
-    line-height: 1.6;
-}
 
 /* Logo Section */
 .logo-section {
-    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    margin: -10px auto; /* Ajusta posicionamento entre as seções */
+    z-index: 2;
 }
 
 .curved-black-section {
     background-color: #202020;
-    width: 600px;
-    height: 600px;
+    width: 250px; /* Tamanho maior */
+    height: 250px; /* Altura igual para manter o círculo */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    right: 0;
-    top: -195%; /* Subiu o círculo para cima */
+    top: -5%;
+    position: relative;
 }
 
 .logo-image {
-    width: 300px; /* Tamanho da logo mantido */
-    height: 300px;
+    width: 150px; /* Tamanho adequado da logo */
 }
 
 /* Footer Section */
 .team-section {
     background-color: #202020;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly; /* Informações na horizontal */
     align-items: center;
     padding: 20px;
+    gap: 30px;
 }
 
 .team-member {
@@ -129,12 +123,12 @@ header nav ul li a:hover {
 }
 
 .team-member h3 {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
 .team-member p {
-    font-size: 14px;
+    font-size: 12px;
     margin: 5px 0;
 }
 
@@ -146,4 +140,54 @@ header nav ul li a:hover {
 
 .team-member a:hover {
     color: #FFFFFF;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .proposta-section {
+        flex-direction: column;
+        clip-path: none;
+        padding: 10px;
+    }
+
+    .text-content {
+        max-width: 90%; /* Texto ocupa mais espaço em telas menores */
+        font-size: 16px;
+    }
+
+    .logo-section {
+        margin: 20px 0; /* Espaçamento entre texto e devs */
+    }
+
+    .curved-black-section {
+        width: 200px; /* Ajusta tamanho do círculo */
+        height: 200px;
+    }
+
+    .logo-image {
+        width: 100px; /* Ajusta tamanho da logo */
+    }
+
+    .team-section {
+        flex-direction: column; /* Empilha os membros da equipe */
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .team-photo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .team-member h3 {
+        font-size: 14px;
+    }
+
+    .team-member p {
+        font-size: 12px;
+    }
+
+    body {
+        overflow-y: auto; /* Adiciona scroll somente em telas menores */
+    }
 }

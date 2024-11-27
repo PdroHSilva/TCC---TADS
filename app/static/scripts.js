@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         formSection.style.display = 'none';
                         map.getContainer().classList.remove('blur-background');
                         carregarMarcadoresFiltrados(mes, dia); // Atualiza o mapa para o dia atual
+                        carregarUltimasNoticias(); // Atualiza o drawer após adicionar uma notícia
                     } else {
                         alert('Erro ao enviar a notícia: ' + data.error);
                     }
@@ -154,10 +155,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const refreshButton = document.getElementById('refresh-news');
 
     function carregarUltimasNoticias() {
-        fetch('/get_markers/')
+        newsHistory.innerHTML = '<div class="loading-spinner"></div>'; // Adiciona o spinner de loading
+        fetch('/get_markers/') // Busca todas as notícias, sem filtro de data
             .then((response) => response.json())
             .then((data) => {
-                newsHistory.innerHTML = '';
+                newsHistory.innerHTML = ''; // Remove o spinner de loading
                 data.forEach((noticia) => {
                     const listItem = document.createElement('li');
                     listItem.innerHTML = `
@@ -168,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     listItem.addEventListener('click', () => {
                         const marker = markerMap.get(noticia.titulo);
                         if (marker) {
-                            map.setView(marker.getLatLng(), 16); // Ajusta o zoom para centralizar o marcador
+                            map.setView(marker.getLatLng(), 16); // Centraliza e ajusta o zoom
                             marker.openPopup();
                             drawer.classList.remove('open'); // Fecha o drawer
                         }
@@ -206,13 +208,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedDate = datepicker.value;
             if (selectedDate) {
                 const [year, month, day] = selectedDate.split('-');
-                recarregarMapaComFiltro(month, day);
-                drawer.classList.remove('open');
+                recarregarMapaComFiltro(month, day); // Atualiza o mapa
+                carregarNoticiasFiltradas(month, day); // Atualiza o drawer com as notícias filtradas
             } else {
                 alert('Selecione uma data!');
             }
         });
     }
+
+    
 
     function recarregarMapaComFiltro(mes, dia) {
         const mapaContainer = document.getElementById('mapa');
