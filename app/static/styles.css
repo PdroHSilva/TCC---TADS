@@ -171,7 +171,7 @@ nav ul li a:hover {
 .news-title {
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: #1ea8a0;
     margin: 0;
 }
 
@@ -188,10 +188,9 @@ nav ul li a:hover {
 
 .news-summary {
     font-size: 16px;
-    color: #555;
+    color: #008000;
     margin-bottom: 10px;
 }
-
 
 .news-details {
     flex: 1;
@@ -226,16 +225,6 @@ nav ul li a:hover {
     flex: 1;
     
 }
-
-
-
-
-
-
-
-
-
-
 
 /* Estilo para o efeito de carregamento */
 #mapa.loading {
