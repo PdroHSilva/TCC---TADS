@@ -84,6 +84,7 @@ def get_noticias_intervalo(request):
                 'icone': noticia.icone,
                 'data_adicionado': localtime(noticia.data_adicionado).isoformat(),
                 'duracao': noticia.duracao,
+                'data': noticia.data,
             }
             for noticia in noticias
         ]

@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }).addTo(map);
 
     // Camada para gerenciar marcadores
-    var markersLayer = L.layerGroup().addTo(map);
+    var markersCluster = L.markerClusterGroup(); // Cria o grupo de clusters
+
+    // Adicione o cluster ao mapa
+    map.addLayer(markersCluster);
 
     // Armazena os marcadores adicionados no mapa
     var markerMap = new Map();
@@ -42,38 +45,50 @@ document.addEventListener('DOMContentLoaded', function () {
     // Adicionar marcador ao mapa
     function adicionarMarcador(latitude, longitude, titulo, resumo, iconName) {
         var icon = icone[iconName] || icone.locationIcon;
-        var marker = L.marker([latitude, longitude], { icon: icon }).addTo(markersLayer);
+    
+        // Crie o marcador
+        var marker = L.marker([latitude, longitude], { icon: icon });
         marker.bindPopup(`<strong>${titulo}</strong><br>${resumo}`);
-        markerMap.set(titulo, marker); // Adiciona o marcador ao Map para rastrear pelo título
+    
+        // Adicione o marcador ao cluster
+        markersCluster.addLayer(marker);
+    
+        // Salve o marcador no Map para referências futuras
+        markerMap.set(titulo, marker);
     }
 
     // Limpar todos os marcadores
     function limparMarcadores() {
-        markersLayer.clearLayers();
-        markerMap.clear();
+        markersCluster.clearLayers(); // Limpa os clusters
+        markerMap.clear(); // Limpa o mapa de marcadores rastreados
     }
 
     // Carregar marcadores filtrados
     function carregarMarcadoresFiltrados(mes, dia) {
-        fetch(`/get_markers/?mes=${mes}&dia=${dia}`)
-            .then((response) => response.json())
-            .then((data) => {
-                limparMarcadores();
-                data.forEach((noticia) => {
-                    if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
-                        adicionarMarcador(
-                            noticia.latitude,
-                            noticia.longitude,
-                            noticia.titulo,
-                            noticia.resumo,
-                            noticia.icone
-                        );
-                    }
+        return new Promise((resolve, reject) => {
+            fetch(`/get_markers/?mes=${mes}&dia=${dia}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    limparMarcadores(); // Limpa os marcadores existentes
+                    data.forEach((noticia) => {
+                        if (!isNaN(noticia.latitude) && !isNaN(noticia.longitude)) {
+                            adicionarMarcador(
+                                noticia.latitude,
+                                noticia.longitude,
+                                noticia.titulo,
+                                noticia.resumo,
+                                noticia.icone
+                            );
+                        }
+                    });
+                    resolve(); // Marcadores carregados
+                })
+                .catch((error) => {
+                    console.error('Erro ao carregar marcadores filtrados:', error);
+                    reject(error); // Rejeita em caso de erro
                 });
-            })
-            .catch((error) => console.error('Erro ao carregar marcadores filtrados:', error));
+        });
     }
-
     // Configurar data atual no filtro
     const datepicker = document.getElementById('datepicker');
     function configurarDataAtual() {
@@ -183,10 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 newsHistory.innerHTML = ''; // Remove o spinner de loading
                 data.forEach((noticia) => {
                     const listItem = document.createElement('li');
-    
-                    // Usa o campo 'data_adicionado' para calcular o tempo relativo
-                    const tempoLegivel = getRelativeTime(noticia.data_adicionado);
-    
                     listItem.innerHTML = `
                     <div class="news-item">
                         <div class="news-header">
@@ -196,24 +207,66 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p class="news-summary">${noticia.resumo}</p>
                         <img src="${noticia.imagem || '/static/imgs/placeholder.png'}" alt="${noticia.titulo}" class="news-image">
                         <div class="news-meta">
-                            <small>Adicionado ${tempoLegivel}</small><br>
+                            <small>Adicionado ${getRelativeTime(noticia.data_adicionado)}</small><br>
                             <small>Duração: ${noticia.duracao} dias</small>
                         </div>
                     </div>
-                `;
+                    `;
+                    
                     listItem.addEventListener('click', () => {
-                        const marker = markerMap.get(noticia.titulo);
-                        if (marker) {
-                            map.setView(marker.getLatLng(), 16); // Centraliza e ajusta o zoom
-                            marker.openPopup();
-                            drawer.classList.remove('open'); // Fecha o drawer
+                        // Obter a data inicial da notícia e a duração
+                        const [anoInicial, mesInicial, diaInicial] = noticia.data.split('T')[0].split('-');
+                        const dataInicial = new Date(anoInicial, mesInicial - 1, diaInicial); // Converte para Date
+                        const duracao = noticia.duracao; // Duração em dias
+                    
+                        // Obter a data atual selecionada no filtro
+                        const dataSelecionada = new Date(datepicker.value);
+                    
+                        // Verifica se a data selecionada está no intervalo da notícia
+                        const dataFinal = new Date(dataInicial);
+                        dataFinal.setDate(dataInicial.getDate() + duracao - 1); // Adiciona a duração
+                    
+                        if (dataSelecionada >= dataInicial && dataSelecionada <= dataFinal) {
+                            // A data selecionada está no intervalo da notícia
+                            carregarMarcadoresFiltrados(
+                                String(dataSelecionada.getMonth() + 1).padStart(2, '0'),
+                                String(dataSelecionada.getDate()).padStart(2, '0')
+                            )
+                                .then(() => {
+                                    const marker = markerMap.get(noticia.titulo); // Busca o marcador pelo título
+                                    if (marker) {
+                                        map.setView(marker.getLatLng(), 16, { animate: true }); // Centraliza no marcador
+                                        marker.openPopup(); // Abre o popup do marcador
+                                        drawer.classList.remove('open'); // Fecha o drawer
+                                    } else {
+                                        console.error(`Marcador não encontrado para a notícia: ${noticia.titulo}`);
+                                    }
+                                })
+                                .catch((error) => console.error('Erro ao recarregar marcadores:', error));
+                        } else {
+                            // Se a data não está no intervalo, filtra para a data inicial da notícia
+                            datepicker.value = `${anoInicial}-${mesInicial}-${diaInicial}`; // Atualiza o datepicker para a data inicial
+                            carregarMarcadoresFiltrados(mesInicial, diaInicial)
+                                .then(() => {
+                                    const marker = markerMap.get(noticia.titulo); // Busca o marcador pelo título
+                                    if (marker) {
+                                        map.setView(marker.getLatLng(), 16, { animate: true }); // Centraliza no marcador
+                                        marker.openPopup(); // Abre o popup do marcador
+                                        drawer.classList.remove('open'); // Fecha o drawer
+                                    } else {
+                                        console.error(`Marcador não encontrado para a notícia: ${noticia.titulo}`);
+                                    }
+                                })
+                                .catch((error) => console.error('Erro ao recarregar marcadores:', error));
                         }
                     });
+                    
                     newsHistory.appendChild(listItem);
                 });
             })
             .catch((error) => console.error('Erro ao carregar últimas notícias:', error));
     }
+    
 
     const toggleDrawerButton = document.getElementById('toggle-drawer');
     const closeDrawerButton = document.getElementById('close-drawer');
