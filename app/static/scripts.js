@@ -188,12 +188,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     const tempoLegivel = getRelativeTime(noticia.data_adicionado);
     
                     listItem.innerHTML = `
-                        <strong>${noticia.titulo}</strong>
-                        <p>${noticia.resumo}</p>
-                        <small>${tempoLegivel}<br>Adicionado em: ${new Date(
-                            noticia.data_adicionado
-                        ).toLocaleString()}<br>Duração: ${noticia.duracao} dias</small>
-                    `;
+                    <div class="news-item">
+                        <div class="news-header">
+                            <h3 class="news-title">${noticia.titulo}</h3>
+                            <a href="${noticia.link}" target="_blank" class="news-source">Fonte</a>
+                        </div>
+                        <p class="news-summary">${noticia.resumo}</p>
+                        <img src="${noticia.imagem || '/static/imgs/placeholder.png'}" alt="${noticia.titulo}" class="news-image">
+                        <div class="news-meta">
+                            <small>Adicionado ${tempoLegivel}</small><br>
+                            <small>Duração: ${noticia.duracao} dias</small>
+                        </div>
+                    </div>
+                `;
                     listItem.addEventListener('click', () => {
                         const marker = markerMap.get(noticia.titulo);
                         if (marker) {

@@ -135,6 +135,86 @@ nav ul li a:hover {
     color: #008000;
 }
 
+.news-item {
+    margin-bottom: 20px;
+    padding: 0; /* Remove espaçamento interno */
+    border: none; /* Remove bordas extras */
+    background-color:linear-gradient(to bottom, #202020, #2c2c2c); /* Mesma cor do fundo do drawer */
+    box-shadow: none; /* Remove sombras, se houver */
+}
+
+#news-history {
+    background-color: transparent; /* Ou remova, se não estiver definido */
+    padding: 0; /* Remova qualquer padding que cause contraste */
+    margin: 0; /* Evite margens desnecessárias */
+}
+
+
+.news-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Limite máximo para a altura da imagem */
+    object-fit: cover; /* Ajusta o conteúdo da imagem para preencher */
+    background-color: #2c2c2c; /* Cor do fundo (cinza claro para integrar) */
+    border: none; /* Remove qualquer borda ao redor da imagem */
+    border-radius: 10px; /* Mantém as bordas arredondadas */
+}
+
+
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.news-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.news-source {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-source:hover {
+    text-decoration: underline;
+}
+
+.news-summary {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+
+.news-details {
+    flex: 1;
+}
+
+.news-link {
+    color: #008000;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.news-link:hover {
+    text-decoration: underline;
+}
+
+.news-meta {
+    font-size: 14px;
+    color: #777;
+    text-align: left;
+}
+
 .lat-long-container {
     display: flex;
     gap: 8px;
@@ -146,6 +226,16 @@ nav ul li a:hover {
     flex: 1;
     
 }
+
+
+
+
+
+
+
+
+
+
 
 /* Estilo para o efeito de carregamento */
 #mapa.loading {

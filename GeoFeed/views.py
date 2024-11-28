@@ -79,6 +79,8 @@ def get_noticias_intervalo(request):
                 'longitude': noticia.longitude,
                 'titulo': noticia.titulo,
                 'resumo': noticia.resumo,
+                'imagem': noticia.imagem.url if noticia.imagem else None,
+                'link': noticia.link,
                 'icone': noticia.icone,
                 'data_adicionado': localtime(noticia.data_adicionado).isoformat(),
                 'duracao': noticia.duracao,
