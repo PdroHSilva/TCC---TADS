@@ -220,8 +220,20 @@ nav ul li a:hover {
     align-items: baseline;
 }
 
+.lat-long-container label {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Garante que o texto não quebre */
+}
 
-.lat-long-container div {
+.required-star {
+    color: red !important;
+    font-weight: bold;
+    margin-left: 2px; /* Ajusta a distância do asterisco */
+}
+
+
+/*.lat-long-container div {
     flex: 1;
     
 }

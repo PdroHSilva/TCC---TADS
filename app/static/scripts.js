@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <a href="${noticia.link}" target="_blank" class="news-source">Fonte</a>
                         </div>
                         <p class="news-summary">${noticia.resumo}</p>
-                        <img src="${noticia.imagem || '/static/imgs/placeholder.png'}" alt="${noticia.titulo}" class="news-image">
+                        ${noticia.imagem ? `<img src="${noticia.imagem}" alt="${noticia.titulo}" class="news-image">` : ''}
                         <div class="news-meta">
                             <small>Adicionado ${getRelativeTime(noticia.data_adicionado)}</small><br>
                             <small>Duração: ${noticia.duracao} dias</small>

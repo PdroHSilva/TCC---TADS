@@ -44,51 +44,55 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                <label for="id_titulo">Título:</label>
+                <label for="id_titulo">Título: <span style="color: red;">*</span></label>
                 {{ form.titulo }}
                 
-                <label for="id_resumo">Resumo:</label>
+                <label for="id_resumo">Resumo: <span style="color: red;">*</span></label>
                 {{ form.resumo }}
                 
                 <label for="id_imagem">Imagem:</label>
                 {{ form.imagem }}
                 
-                <label for="id_link">Link:</label>
+                <label for="id_link">Link: <span style="color: red;">*</span></label>
                 {{ form.link }}
-
+            
                 <div class="date-duration-container">
                     <!-- Campo Data -->
                     <div class="field">
-                        <label for="id_data">Data:</label>
+                        <label for="id_data">Data: <span style="color: red;">*</span></label>
                         {{ form.data }}
                     </div>
                     <!-- Campo Duração -->
                     <div class="field">
-                        <label for="id_duracao">Duração (em dias):</label>
+                        <label for="id_duracao">Duração (em dias): <span style="color: red;">*</span></label>
                         <input type="number" name="duracao" id="id_duracao" min="1" placeholder="Digite a duração ou deixe em branco para indeterminado">
                     </div>
                 </div>
-    
+            
                 <div class="lat-long-container">
-                    <label for="id_latitude">Latitude:</label>
-                    <input type="number" name="latitude" step="any" id="id_latitude" placeholder="Ex: -20.789">
+                    <div class="field">
+                        <label for="id_latitude">Latitude: <span class="required-star">*</span></label>
+                        <input type="number" name="latitude" step="any" id="id_latitude" placeholder="Ex: -20.789">
+                    </div>
                     
-                    <label for="id_longitude">Longitude:</label>
-                    <input type="number" name="longitude" step="any" id="id_longitude" placeholder="Ex: -51.700">
+                    <div class="field">
+                        <label for="id_longitude">Longitude: <span class="required-star">*</span></label>
+                        <input type="number" name="longitude" step="any" id="id_longitude" placeholder="Ex: -51.700">
+                    </div>
                 </div>
                 
-                <label for="icone">Escolha o ícone:</label>
+                <label for="icone">Escolha o ícone: <span style="color: red;">*</span></label>
                 <div class="icon-selection">
                     <input type="radio" id="car-icon" name="icone" value="carIcon" checked>
                     <label for="car-icon">
                         <img src="{% static 'imgs/icon1.png' %}" alt="Ícone de Carro" width="40">
                     </label>
-        
+            
                     <input type="radio" id="theater-icon" name="icone" value="theaterIcon">
                     <label for="theater-icon">
                         <img src="{% static 'imgs/icon2.png' %}" alt="Ícone Teatro" width="40">
                     </label>
-        
+            
                     <input type="radio" id="location-icon" name="icone" value="locationIcon">
                     <label for="location-icon">
                         <img src="{% static 'imgs/icon3.png' %}" alt="Ícone Localização" width="40">
