@@ -16,11 +16,16 @@ body {
 
 /* Header */
 header {
-    background-color: #202020;
-    height: 50px;
+    
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Espaça os elementos nos extremos */
     align-items: center;
+    background-color: #202020;
+    padding: 10px 20px; /* Ajuste de espaçamento interno */
+    height: 62px;
+    width: 100%;
+    box-sizing: border-box;
+    
 }
 
 header nav ul {
@@ -36,6 +41,49 @@ header nav ul li a {
 }
 
 header nav ul li a:hover {
+    color: #00FF00;
+}
+
+/* Logo e título à esquerda */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaço entre logo e título */
+    position: absolute;
+    left: 20px;
+}
+
+.logo-text {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espaço entre os elementos principais */
+    height: 62px;
+}
+
+.nav-links {
+    list-style: none; /* Remove marcadores */
+    display: flex; /* Define como flex container */
+    justify-content: center; /* Centraliza os links */
+    align-items: center; /* Alinha verticalmente */
+    gap: 40px; /* Espaçamento entre os links */
+    flex-grow: 1; /* Faz o container dos links ocupar espaço extra */
+    margin: 0; /* Remove margens */
+    padding: 0; /* Remove padding */
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.nav-links li a:hover {
     color: #00FF00;
 }
 
@@ -61,8 +109,8 @@ header nav ul li a:hover {
 .text-content {
     max-width: 70%; /* Ajusta o tamanho máximo do texto */
     margin: 0 auto; /* Centraliza o texto horizontalmente */
-    text-align: center; /* Alinha o texto ao centro */
-    font-size: 20px; /* Aumenta o tamanho do texto */
+    text-align: justify; /* Alinha o texto ao centro */
+    font-size: 24px; /* Aumenta o tamanho do texto */
     line-height: 1.8; /* Melhora o espaçamento entre linhas */
     color: white;
 }
@@ -98,6 +146,19 @@ header nav ul li a:hover {
 
 .logo-image {
     width: 150px; /* Tamanho adequado da logo */
+}
+
+/* Estilo da logo */
+.site-logo {
+    height: 40px; /* Ajuste a altura conforme necessário */
+    width: auto;
+}
+
+/* Estilo do título */
+.site-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff; /* Branco para combinar com o tema */
 }
 
 /* Footer Section */

@@ -9,14 +9,19 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="{% static 'imgs/logo.png' %}" alt="Logo GeoFeed" class="site-logo">
+                <span class="site-title">GeoFeed</span>
+            </div>
+            <ul class="nav-links">
                 <li><a href="/">Mapa</a></li>
                 <li><a href="/contato">Contato</a></li>
             </ul>
         </nav>
     </header>
-
+    
+    
     <main class="main-container">
         <!-- Área Verde com Proposta -->
         <section class="proposta-section">
