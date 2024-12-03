@@ -212,52 +212,49 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     </div>
                     `;
-                    
                     listItem.addEventListener('click', () => {
-                        // Obter a data inicial da notícia e a duração
-                        const [anoInicial, mesInicial, diaInicial] = noticia.data.split('T')[0].split('-');
-                        const dataInicial = new Date(anoInicial, mesInicial - 1, diaInicial); // Converte para Date
-                        const duracao = noticia.duracao; // Duração em dias
+                        const [ano, mes, dia] = noticia.data.split('T')[0].split('-');
+                        datepicker.value = `${ano}-${mes}-${dia}`;
                     
-                        // Obter a data atual selecionada no filtro
-                        const dataSelecionada = new Date(datepicker.value);
+                        carregarMarcadoresFiltrados(mes, dia)
+                            .then(() => {
+                                const marker = markerMap.get(noticia.titulo);
+                                if (marker) {
+                                    const latLng = marker.getLatLng();
+                                    map.setView(latLng, 22, { animate: true });
+                                    setTimeout(() => {
+                                        map.panBy([50, 0]); // Ajusta posição horizontalmente
+                                    }, 300);
+                                    marker.openPopup();
+                                    drawer.classList.remove('open');
+                                } else {
+                                    console.error(`Marcador não encontrado para a notícia: ${noticia.titulo}`);
+                                }
+                            })
+                            .catch((error) => console.error('Erro ao recarregar marcadores:', error));
+                    });
                     
-                        // Verifica se a data selecionada está no intervalo da notícia
-                        const dataFinal = new Date(dataInicial);
-                        dataFinal.setDate(dataInicial.getDate() + duracao - 1); // Adiciona a duração
+                    map.on('popupopen', (e) => {
+                        const marker = e.popup._source;
+                        const nearbyMarkers = [];
+                        markersLayer.eachLayer((layer) => {
+                            if (layer !== marker) {
+                                const distance = map.distance(marker.getLatLng(), layer.getLatLng());
+                                if (distance < 20) {
+                                    nearbyMarkers.push(layer);
+                                }
+                            }
+                        });
                     
-                        if (dataSelecionada >= dataInicial && dataSelecionada <= dataFinal) {
-                            // A data selecionada está no intervalo da notícia
-                            carregarMarcadoresFiltrados(
-                                String(dataSelecionada.getMonth() + 1).padStart(2, '0'),
-                                String(dataSelecionada.getDate()).padStart(2, '0')
-                            )
-                                .then(() => {
-                                    const marker = markerMap.get(noticia.titulo); // Busca o marcador pelo título
-                                    if (marker) {
-                                        map.setView(marker.getLatLng(), 16, { animate: true }); // Centraliza no marcador
-                                        marker.openPopup(); // Abre o popup do marcador
-                                        drawer.classList.remove('open'); // Fecha o drawer
-                                    } else {
-                                        console.error(`Marcador não encontrado para a notícia: ${noticia.titulo}`);
-                                    }
-                                })
-                                .catch((error) => console.error('Erro ao recarregar marcadores:', error));
-                        } else {
-                            // Se a data não está no intervalo, filtra para a data inicial da notícia
-                            datepicker.value = `${anoInicial}-${mesInicial}-${diaInicial}`; // Atualiza o datepicker para a data inicial
-                            carregarMarcadoresFiltrados(mesInicial, diaInicial)
-                                .then(() => {
-                                    const marker = markerMap.get(noticia.titulo); // Busca o marcador pelo título
-                                    if (marker) {
-                                        map.setView(marker.getLatLng(), 16, { animate: true }); // Centraliza no marcador
-                                        marker.openPopup(); // Abre o popup do marcador
-                                        drawer.classList.remove('open'); // Fecha o drawer
-                                    } else {
-                                        console.error(`Marcador não encontrado para a notícia: ${noticia.titulo}`);
-                                    }
-                                })
-                                .catch((error) => console.error('Erro ao recarregar marcadores:', error));
+                        if (nearbyMarkers.length > 0) {
+                            let popupContent = e.popup.getContent();
+                            popupContent += `<br><strong>Marcadores próximos:</strong><ul>`;
+                            nearbyMarkers.forEach((nearbyMarker) => {
+                                const nearbyTitle = nearbyMarker.getPopup().getContent().split('<br>')[0];
+                                popupContent += `<li>${nearbyTitle}</li>`;
+                            });
+                            popupContent += `</ul>`;
+                            e.popup.setContent(popupContent);
                         }
                     });
                     
