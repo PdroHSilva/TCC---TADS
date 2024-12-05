@@ -746,3 +746,184 @@ form label {
     justify-content: center; /* Centraliza os ícones */
     margin: 15px 0;
 }
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    /* Container do cabeçalho */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #202020;
+        height: 62px;
+    }
+
+    /* Logo à esquerda */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .site-logo {
+        height: 30px;
+    }
+
+    .site-title {
+        font-size: 16px;
+        color: #fff;
+    }
+
+    /* Ajuste para os links na navegação em telas menores */
+    .nav-links {
+        display: flex;
+        flex-direction: column; /* Coloca os itens em coluna */
+        justify-content: center;
+        gap: 3px; /* Espaçamento entre os itens */
+        margin-left: 133px; /* Espaçamento entre a logo e os links */
+        flex: 1; /* Faz os links ocuparem o espaço restante */
+    }
+
+    .nav-links li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+    }
+
+    .nav-links li a:hover {
+        color: #008000;
+    }
+
+    /* Menu hambúrguer (no lado direito) */
+    .hamburger-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+    }
+
+    .hamburger-icon div {
+        background-color: #fff;
+        height: 3px;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    /* Ajuste para o mapa em telas menores */
+    #mapa {
+        width: 100%;
+        height: calc(100vh - 62px); /* Preenche a tela restante sem cobrir o mapa */
+    }
+
+    /* Ajuste para o container do formulário */
+    #form-section {
+        padding: 20px;
+        width: 100%; /* Faz o formulário ocupar toda a largura disponível */
+        box-sizing: border-box;
+    }
+
+    /* Título */
+    #form-section h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Tamanho do botão de fechar */
+    #close-form {
+        font-size: 30px;
+        color: #202020;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    /* Formulário */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Ajuste para os campos de input (título, resumo, link, etc.) */
+    label {
+        font-size: 14px;
+        color: #fff;
+        margin-bottom: 5px;
+    }
+
+    input, textarea, select {
+        width: 100%; /* Faz os campos de input ocuparem toda a largura disponível */
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .date-duration-container, .lat-long-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: space-between;
+    }
+
+    .field {
+        flex: 1 1 48%; /* Cada campo vai ocupar aproximadamente metade da largura */
+    }
+
+    /* Ajuste para os ícones */
+    .icon-selection {
+        display: flex;
+        gap: 15px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .icon-selection label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #fff;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .icon-selection input[type="radio"] {
+        display: none;
+    }
+
+    /* Ajuste para o botão de enviar */
+    button[type="submit"] {
+        padding: 12px;
+        background-color: #008000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #006400;
+    }
+}
+
+
+
+
+
+

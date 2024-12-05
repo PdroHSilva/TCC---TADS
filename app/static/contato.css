@@ -9,7 +9,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: white;
     min-height: 100vh;
-    overflow-x: hidden; /* Remove scroll horizontal */
+    overflow: hidden; /* Remove scroll horizontal */
     display: flex;
     flex-direction: column;
 }
@@ -25,7 +25,7 @@ header {
     height: 62px;
     width: 100%;
     box-sizing: border-box;
-    
+    z-index: 1000;
 }
 
 header nav ul {
@@ -77,6 +77,21 @@ header nav ul li a:hover {
     padding: 0; /* Remove padding */
 }
 
+/* Hamburger Icon */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 5px;
+}
+
 .nav-links li a {
     color: white;
     text-decoration: none;
@@ -93,6 +108,7 @@ header nav ul li a:hover {
     flex-direction: column;
     justify-content: space-between;
     height: calc(100vh - 50px); /* Altura dinâmica */
+    
 }
 
 /* Proposta Section */
@@ -205,34 +221,85 @@ header nav ul li a:hover {
 
 /* Responsividade */
 @media (max-width: 768px) {
+    /* Ajustes para o header */
+    header {
+        flex-direction: column; /* Alinha os itens verticalmente */
+        padding: 15px; /* Ajusta o padding */
+        position: relative; /* Garante que o header não se sobreponha */
+        z-index: 10; /* Garante que o header esteja acima do conteúdo */
+    }
+
+    .navbar {
+        
+        width: 100%;
+        position: relative;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+        left: 0;
+    }
+
+    .nav-links {
+        display: flex;
+        
+        align-items: center; /* Centraliza os itens */
+        padding: 10px 0;
+        width: 100%;
+        position: relative;
+        z-index: 5;
+    }
+
+    .nav-links li a {
+        font-size: 16px;
+        padding: 10px 0;
+        width: 100%; /* Expande os links para a largura total */
+        text-align: center;
+    }
+
+    /* Ajuste da main-container para evitar que a navbar cubra o conteúdo */
+    .main-container {
+        
+        overflow-x: hidden; /* Evita scroll horizontal */
+    }
+
+    /* Ajustes na proposta-section */
     .proposta-section {
         flex-direction: column;
         clip-path: none;
-        padding: 10px;
+        padding: 15px;
     }
 
     .text-content {
-        max-width: 90%; /* Texto ocupa mais espaço em telas menores */
-        font-size: 16px;
+        max-width: 90%;
+        font-size: 18px;
     }
 
     .logo-section {
-        margin: 20px 0; /* Espaçamento entre texto e devs */
+        margin: 20px 0; /* Ajusta o espaço entre as seções */
     }
 
     .curved-black-section {
-        width: 200px; /* Ajusta tamanho do círculo */
+        width: 200px;
         height: 200px;
     }
 
     .logo-image {
-        width: 100px; /* Ajusta tamanho da logo */
+        width: 120px;
     }
 
+    /* Ajustes no footer */
     .team-section {
-        flex-direction: column; /* Empilha os membros da equipe */
-        gap: 15px;
+        flex-direction: column;
+        gap: 20px;
         padding: 20px;
+    }
+
+    .team-member {
+        text-align: center;
     }
 
     .team-photo {
@@ -247,8 +314,7 @@ header nav ul li a:hover {
     .team-member p {
         font-size: 12px;
     }
-
-    body {
-        overflow-y: auto; /* Adiciona scroll somente em telas menores */
-    }
 }
+
+
+
